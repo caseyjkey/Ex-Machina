@@ -60,7 +60,7 @@ def main(args):
         all_images = []
         for indiv in row:
             
-            paths = glob.glob((args.fiw_root + '\\' + indiv + '\\*'))
+            paths = glob.glob((args.fiw_root + '/' + indiv + '/*'))
             indiv_images = []
             # #   open all files
             # for path in paths:
@@ -73,7 +73,7 @@ def main(args):
 
     
 
-    import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
     
 
 
@@ -88,11 +88,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Inference with StyleDNA')
 
     parser.add_argument('--device', help='Device to be used by the model (default=cuda:0)', default="cuda")
-    parser.add_argument('--fs_path', help='csv file where father son relationships are stored', default=r"recognizing-faces-in-the-wild\test-public-lists\test-public-lists\fs.csv")
-    parser.add_argument('--fd_path', help='csv file where father daughter relationships are stored', default=r"recognizing-faces-in-the-wild\test-public-lists\test-public-lists\fd.csv")
-    parser.add_argument('--ms_path', help='csv file where mother son relationships are stored', default=r"recognizing-faces-in-the-wild\test-public-lists\test-public-lists\ms.csv")
-    parser.add_argument('--md_path', help='csv file where mother daughter relationships are stored', default=r"recognizing-faces-in-the-wild\test-public-lists\test-public-lists\md.csv")
-    parser.add_argument('--fiw_root', help='root directory of families in the while training set.', default=r"recognizing-faces-in-the-wild\train-faces")
+    parser.add_argument('--fs_path', help='csv file where father son relationships are stored', default=r"./recognizing-faces-in-the-wild/test-public-lists/fs.csv")
+    parser.add_argument('--fd_path', help='csv file where father daughter relationships are stored', default=r"./recognizing-faces-in-the-wild/test-public-lists/fd.csv")
+    parser.add_argument('--ms_path', help='csv file where mother son relationships are stored', default=r"./recognizing-faces-in-the-wild/test-public-lists/ms.csv")
+    parser.add_argument('--md_path', help='csv file where mother daughter relationships are stored', default=r"./recognizing-faces-in-the-wild/test-public-lists/md.csv")
+    parser.add_argument('--fiw_root', help='root directory of families in the while training set.', default=r"./recognizing-faces-in-the-wild/train-faces")
     args = parser.parse_args()
 
     ### RUN

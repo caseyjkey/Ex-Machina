@@ -26,15 +26,18 @@ def main(args):
     mapper = nn.DataParallel(condi()).to(device)
     mapper.load_state_dict(torch.load(args.map), strict=True)
     mapper.eval()
+    mapper.requires_grad_(False)
 
     net = nn.DataParallel(pSp(3, args.enc, args.gan)).to(device)
     net.eval()
+    net.requires_grad_(False)
 
     arcface = Backbone(num_layers=50,drop_ratio=0.6,mode="ir_se").to(device)
     arcface.load_state_dict(torch.load(args.irse50))
     arcface.eval()
+    arcface.requires_grad_(False)
 
-    batch_size = 2
+    batch_size = 4
     num_epochs = 1
     training_data = FiW_Dataset(args.trip,args.fiw, align_faces=True,device=device)
     train_dataloader = torch.utils.data.DataLoader(training_data, batch_size=batch_size, shuffle=True)
@@ -87,10 +90,11 @@ def main(args):
             rec_loss = losses['rec_loss']
             kl_loss =  losses['kl_loss'].mean(dim=1)
 
-            RI_ori = arcface(resize(triplet[2], (112,112)))
-            RI_gen = arcface(resize(cImg_hat, (112,112)))
+            #RI_ori = arcface(resize(triplet[2], (112,112)))
+            #RI_gen = arcface(resize(cImg_hat, (112,112)))
 
-            l_id = 1 - CoSim(RI_ori,RI_gen)
+            #l_id = 1 - CoSim(RI_ori,RI_gen)
+            l_id = 0
 
             loss = l2_w*rec_loss + l_id_w*l_id + beta*kl_loss
             loss = loss.mean()
